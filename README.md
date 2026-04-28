@@ -20,10 +20,22 @@ E também conseguimos agendar um elevador colocando informações simples como o
 
 ## ✨ Funcionalidades Principais
 
+### Autenticação e Cadastro
+- **Tela de cadastro** com campos:
+  - RM (ex: `RM123456`)
+  - E-mail válido
+  - Senha com mínimo de 6 caracteres
+  - Confirmação de senha igual à senha
+- **Tela de login** com validação explícita dos campos e mensagens inline de erro
+- **Persistência de sessão** usando `AsyncStorage` para manter o usuário logado entre reinícios
+- **Logout** limpa a sessão e retorna à tela de login
+- **Fluxo inicial**: usuário não logado é redirecionado para cadastro/login antes de acessar Home
+
 ## HOME 
 - **Acesso para as opções**
 - **AGENDAR ELEVADOR**
 - **LOCALIZAR ELEVADOR**
+- **LOGOUT** disponível após login
 
 ### 🏢 Simulação de Elevadores
 - **8 elevadores independentes** (A-H) com estados dinâmicos
@@ -74,7 +86,8 @@ nosso-app-elevador/
 - **Expo Router ~55.0.7** - Navegação baseada em arquivos
 - **React 19.2.0** - Biblioteca de componentes
 - **expo-linear-gradient** - Gradientes visuais
-- 
+- **@react-native-async-storage/async-storage** - Armazenamento persistente de sessão e dados
+
 ## 🚀 Instalação e Execução
 
 ### Pré-requisitos
@@ -106,15 +119,23 @@ nosso-app-elevador/
 
 ## 🎮 Como Usar
 
-1. **Tela Inicial**: Navegue entre "Agendar Elevador" e "Localizar Elevador"
-2. **Localizar Elevador**: Observe a simulação automática
+1. **Cadastro**: Na primeira execução, crie sua conta com:
+   - RM (por exemplo, `RM123456`)
+   - E-mail válido
+   - Senha com pelo menos 6 caracteres
+   - Confirmação de senha idêntica
+2. **Login**: Informe seu e-mail e senha para acessar o app.
+   - Se já estiver logado em sessão anterior, o app entra direto na Home
+3. **Tela Inicial**: Após o login, navegue entre "Agendar Elevador" e "Localizar Elevador"
+4. **Localizar Elevador**: Observe a simulação automática
    - Pedidos são gerados automaticamente a cada 2-5 segundos
    - 2-5 elevadores são despachados simultaneamente
    - Acompanhe o progresso visual e estados em tempo real
    - Cada elevador tem cor distinta para fácil identificação
-3. **Agendar Elevador**:
-   - É possível informar o horário de chegada.
-   - Escolher o elevador entre A-H e agendar.
+5. **Agendar Elevador**:
+   - Informe o horário de chegada
+   - Selecione o andar desejado
+   - Confirme para agendar um elevador disponível
   
 ## 📋d) Demonstração
 
@@ -132,7 +153,7 @@ nosso-app-elevador/
 
 <img width="601" height="872" alt="image" src="https://github.com/user-attachments/assets/36d165b3-3a0f-4c82-a70b-7a7a437f3973" />
 
-### VÍDEO DE DEMOSNTRAÇÃO
+### VÍDEO DE DEMONSTRAÇÃO
 
 ![Demonstração do App](./nosso-app-elevador/app/img/demonstracaogif.gif)
 

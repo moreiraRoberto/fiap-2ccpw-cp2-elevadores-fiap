@@ -1,14 +1,48 @@
-import { View, Text, StyleSheet, TouchableOpacity, Image } from 'react-native';
-import { Link, Stack } from 'expo-router';
+import { useEffect, useState } from 'react';
+import { View, Text, StyleSheet, TouchableOpacity, Image, ActivityIndicator } from 'react-native';
+import { Link, Stack, useRouter } from 'expo-router';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 import logoPrincipal from './img/logoprincipal.png';
 import fotoElevadores from './img/foto3elevadores.png';
 
+const SESSION_STORAGE_KEY = '@fiapElevador:session';
+
 export default function Home() {
+  const router = useRouter();
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    async function verifySession() {
+      const session = await AsyncStorage.getItem(SESSION_STORAGE_KEY);
+      if (!session) {
+        router.replace('/register');
+        return;
+      }
+      setLoading(false);
+    }
+
+    verifySession();
+  }, [router]);
+
+  const handleLogout = async () => {
+    await AsyncStorage.removeItem(SESSION_STORAGE_KEY);
+    router.replace('/login');
+  };
+
+  if (loading) {
+    return (
+      <View style={styles.loadingContainer}>
+        <ActivityIndicator size="large" color="#ED145B" />
+        <Text style={styles.loadingText}>Verificando autenticação...</Text>
+      </View>
+    );
+  }
+
   return (
     <View style={styles.container}>
-{/*coloquei esse comando para sumir a palavra index no topo da pagina*/}
-    <Stack.Screen options={{ headerShown: false }} />
+      {/*coloquei esse comando para sumir a palavra index no topo da pagina*/}
+      <Stack.Screen options={{ headerShown: false }} />
 
       {/* Imagem de Fundo com a imagem do elevador para destaca*/}
       <Image 
@@ -43,6 +77,10 @@ export default function Home() {
             <Text style={styles.textoBotao}>Localizar Elevador</Text>
           </TouchableOpacity>
         </Link>
+
+        <TouchableOpacity style={StyleSheet.flatten([styles.botao, styles.botaoLogout])} onPress={handleLogout}>
+          <Text style={styles.textoBotao}>Logout</Text>
+        </TouchableOpacity>
       </View>
     </View>
   );
@@ -90,6 +128,17 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     zIndex: 2 
   },
+  loadingContainer: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor: '#000',
+  },
+  loadingText: {
+    marginTop: 12,
+    color: '#fff',
+    fontSize: 16,
+  },
   botao: { 
     backgroundColor: '#1C1C1C', 
     padding: 22, 
@@ -98,6 +147,9 @@ const styles = StyleSheet.create({
   },
   botaoRosa: { 
     backgroundColor: '#ED145B' 
+  },
+  botaoLogout: {
+    backgroundColor: '#333',
   },
   textoBotao: { 
     color: '#fff', 
