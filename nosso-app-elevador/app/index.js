@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react';
 import { View, Text, StyleSheet, TouchableOpacity, Image, ActivityIndicator } from 'react-native';
 import { Link, Stack, useRouter } from 'expo-router';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import { useAuth } from '../context/AuthContext'; // Importando o hook
 
 import logoPrincipal from './img/logoprincipal.png';
 import fotoElevadores from './img/foto3elevadores.png';
@@ -9,6 +10,7 @@ import fotoElevadores from './img/foto3elevadores.png';
 const SESSION_STORAGE_KEY = '@fiapElevador:session';
 
 export default function Home() {
+  const { isDark, toggleTheme } = useAuth();
   const router = useRouter();
   const [loading, setLoading] = useState(true);
 
@@ -87,6 +89,21 @@ export default function Home() {
 }
 
 // Ajustando o estilo do home 
+
+<View style={[styles.container, { backgroundColor: isDark ? '#121212' : '#000' }]}>
+  
+  {/* Exemplo de botão para alternar o tema (Diferencial) */}
+  <TouchableOpacity onPress={toggleTheme} style={{ padding: 10, alignSelf: 'flex-end' }}>
+    <Text style={{ color: '#fff' }}>{isDark ? '☀️ Light Mode' : '🌙 Dark Mode'}</Text>
+  </TouchableOpacity>
+
+  <View style={styles.header}>
+     {/* Se o título precisar mudar de cor */}
+     <Text style={[styles.tituloApp, { color: isDark ? '#ED145B' : '#fff' }]}>
+       FIAP Elevadores
+     </Text>
+  </View>
+  
 const styles = StyleSheet.create({
   container: { 
     flex: 1, 

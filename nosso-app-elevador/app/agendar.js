@@ -1,5 +1,6 @@
 import { View, Text, TouchableOpacity, StyleSheet, TextInput } from 'react-native';
 import { useState, useEffect } from 'react';
+import AsyncStorage from '@react-native-async-storage/async-storage'; //importando o async-storage
 
 export default function Agendar() {
   const [carregando, setCarregando] = useState(true);
@@ -8,13 +9,30 @@ export default function Agendar() {
   const [horario, setHorario] = useState('');
   const [elevador, setElevador] = useState(null);
   const [mensagem, setMensagem] = useState('Escolha um andar e horário');
-    // simular carregamento inicial 
+
+    // simular carregamento inicial, carregar os dados ao abrir a tela
+
   useEffect(() => {
     setTimeout(() => {
+    async function carregarAgendamentoSalvo() {
+    try {
+      const dados = await AsyncStorage.getItem('@fiapElevador:agendamentos');
+      if (dados) {
+        const agendamento = JSON.parse(dados);
+        setAndar(agendamento.andar);
+        setHorario(agendamento.horario);
+        setElevador(agendamento.elevadorId);
+        setMensagem('Último agendamento recuperado!');
+      }
+    } catch (e) {
+      console.error("Erro ao carregar dados", e);
+    } finally {
       setCarregando(false);
-    }, 2000);
-  }, []);
-
+    }
+  }
+  carregarAgendamentoSalvo();
+}, []);
+  
   const elevadores = [
     { id: 'A', ocupado: false },
     { id: 'B', ocupado: false },
@@ -47,6 +65,15 @@ export default function Agendar() {
 
     const escolhido = livres[Math.floor(Math.random() * livres.length)];
     setElevador(escolhido.id);
+
+  const novoAgendamento = {
+  andar: andar, 
+  horario: horario,
+  elevadorId: escolhido.id
+};
+
+AsyncStorage.setItem('@fiapElevador:agendamentos', JSON.stringify(novoAgendamento))
+  .catch(err => console.log("Erro ao salvar", err));
   };
 
   // tela de carregamento 
