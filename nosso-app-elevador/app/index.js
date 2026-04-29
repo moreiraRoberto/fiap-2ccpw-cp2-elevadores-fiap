@@ -10,7 +10,7 @@ import fotoElevadores from './img/foto3elevadores.png';
 const SESSION_STORAGE_KEY = '@fiapElevador:session';
 
 export default function Home() {
-  const { isDark, toggleTheme } = useAuth();
+  const { isDark, toggleTheme, logout } = useAuth(); 
   const router = useRouter();
   const [loading, setLoading] = useState(true);
 
@@ -45,6 +45,10 @@ export default function Home() {
     <View style={styles.container}>
       {/*coloquei esse comando para sumir a palavra index no topo da pagina*/}
       <Stack.Screen options={{ headerShown: false }} />
+
+      <TouchableOpacity onPress={toggleTheme} style={styles.botaoTema}>
+        <Text style={{ color: '#fff' }}>{isDark ? '☀️ Light' : '🌙 Dark'}</Text>
+      </TouchableOpacity>
 
       {/* Imagem de Fundo com a imagem do elevador para destaca*/}
       <Image 

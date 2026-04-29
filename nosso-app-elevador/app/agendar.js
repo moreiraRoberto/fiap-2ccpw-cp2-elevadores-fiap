@@ -1,10 +1,8 @@
 import { View, Text, TouchableOpacity, StyleSheet, TextInput } from 'react-native';
 import { useState, useEffect } from 'react';
-<<<<<<< HEAD
 import AsyncStorage from '@react-native-async-storage/async-storage'; //importando o async-storage
-=======
 import * as Notifications from 'expo-notifications';
->>>>>>> edde89e9bf3bcaa25616f074bcba55cbc0281078
+
 
 export default function Agendar() {
   const [carregando, setCarregando] = useState(true);
@@ -14,15 +12,13 @@ export default function Agendar() {
   const [elevador, setElevador] = useState(null);
   const [mensagem, setMensagem] = useState('Escolha um andar e horário');
 
-<<<<<<< HEAD
     // simular carregamento inicial, carregar os dados ao abrir a tela
-=======
+
   const [errors, setErrors] = useState({});
 
   useEffect(() => {
     Notifications.requestPermissionsAsync();
   }, []);
->>>>>>> edde89e9bf3bcaa25616f074bcba55cbc0281078
 
   useEffect(() => {
     setTimeout(() => {
@@ -103,18 +99,13 @@ export default function Agendar() {
     }
   };
 
-  const agendarElevador = () => {
-    if (Object.keys(errors).length > 0) {
-      return;
-    }
-
-    if (!andar || !horario) {
-      setMensagem('Escolha um andar e horário');
+const agendarElevador = async () => { // Adicione o async aqui
+    if (Object.keys(errors).length > 0 || !andar || !horario) {
+      setMensagem('Verifique os campos antes de agendar');
       return;
     }
 
     const livres = elevadores.filter(e => !e.ocupado);
-
     if (livres.length === 0) {
       setMensagem('Nenhum elevador disponível');
       return;
@@ -124,18 +115,22 @@ export default function Agendar() {
 
     setElevador(escolhido.id);
 
-<<<<<<< HEAD
   const novoAgendamento = {
   andar: andar, 
   horario: horario,
   elevadorId: escolhido.id
 };
+try {
+      await AsyncStorage.setItem('@fiapElevador:agendamentos', JSON.stringify(novoAgendamento));
+      agendarNotificacao(escolhido.id);
+    } catch (err) {
+      console.log("Erro ao salvar agendamento", err);
+    }
 
 AsyncStorage.setItem('@fiapElevador:agendamentos', JSON.stringify(novoAgendamento))
   .catch(err => console.log("Erro ao salvar", err));
-=======
+
     agendarNotificacao(escolhido.id);
->>>>>>> edde89e9bf3bcaa25616f074bcba55cbc0281078
   };
 
   const canSubmit =
