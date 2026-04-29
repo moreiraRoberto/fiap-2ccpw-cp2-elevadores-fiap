@@ -99,11 +99,39 @@ export default function Agendar() {
     }
   };
 
-const agendarElevador = async () => { // Adicione o async aqui
-    if (Object.keys(errors).length > 0 || !andar || !horario) {
-      setMensagem('Verifique os campos antes de agendar');
-      return;
-    }
+const agendarElevador = async () => {
+  // Validação: Se houver erros ou campos vazios, não prossegue
+  if (Object.keys(errors).length > 0 || !andar || !horario) {
+    setMensagem('Verifique os campos antes de agendar');
+    return;
+  }
+
+  const livres = elevadores.filter(e => !e.ocupado);
+  if (livres.length === 0) {
+    setMensagem('Nenhum elevador disponível');
+    return;
+  }
+
+  const escolhido = livres[Math.floor(Math.random() * livres.length)];
+  setElevador(escolhido.id);
+
+  const novoAgendamento = {
+    andar: andar, 
+    horario: horario,
+    elevadorId: escolhido.id
+  };
+
+  try {
+    // SALVA NO STORAGE (ITEM 2)
+    await AsyncStorage.setItem('@fiapElevador:agendamentos', JSON.stringify(novoAgendamento));
+    // AGENDA A NOTIFICAÇÃO
+    await agendarNotificacao(escolhido.id);
+    setMensagem(`Elevador ${escolhido.id} agendado com sucesso!`);
+  } catch (err) {
+    console.log("Erro ao processar agendamento:", err);
+    setMensagem('Erro ao salvar os dados.');
+  }
+};
 
     const livres = elevadores.filter(e => !e.ocupado);
     if (livres.length === 0) {

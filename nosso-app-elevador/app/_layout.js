@@ -13,7 +13,7 @@ function RootLayoutNav() {
   useEffect(() => {
     if (loading) return;
 
-    const inAuthGroup = segments[0] === '(auth)' || segments[Segments.length -1] === 'login' || segments[segments.length -1] === 'register';
+    const inAuthGroup = segments[0] === '(auth)' || segments[segments.length -1] === 'login' || segments[segments.length -1] === 'register';
 
     if (!signed && !inAuthGroup) {
       // Redireciona para login se não estiver logado e tentar acessar área restrita

@@ -58,16 +58,16 @@ const register = async (newUser) => {
 
 return (
     <AuthContext.Provider value={{ 
-    signed: !!user, 
-    user, 
-    login, 
-    logout, 
-    register, 
-    loading,
-      isDark,       // ADICIONE ISSO
-      toggleTheme   // ADICIONE ISSO
+        signed: !!user, 
+        user, 
+        login, 
+        logout, 
+        register, 
+        loading,
+        isDark,
+        toggleTheme
     }}>
-    {children}
+        {children}
     </AuthContext.Provider>
 );
 }
