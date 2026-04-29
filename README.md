@@ -167,7 +167,7 @@ nosso-app-elevador/
 
 
 ![Demonstração do App](./nosso-app-elevador/app/img/GIF1.gif)
-![Demonstração do App](./nosso-app-elevador/app/img/demonstracaogif.gif)
+<img width="652" height="828" alt="Image" src="https://github.com/user-attachments/assets/0d98ec44-9c34-4b74-8816-3fbeb820fa4f" />
 
 ## 📋d) Decisões Técnicas
 **HOOKs**
