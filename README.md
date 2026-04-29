@@ -76,6 +76,7 @@ nosso-app-elevador/
 **Guilherme Ferraz Medeiros** - RM 564743.
 **Roberto Marques Moreira** - RM 564935.
 **Anny Elly Pantoja** - RM : 565055 .
+**Laís Salomão** - RM: 565262
 
 ## 📋**c) Como Rodar o projeto**
 
