@@ -1,44 +1,21 @@
-import { useEffect, useState } from 'react';
-import { Link, Stack, useRouter } from 'expo-router';
-import AsyncStorage from '@react-native-async-storage/async-storage';
+import { Stack, Link } from 'expo-router';
 import { useAuth } from '../context/AuthContext'; 
-import { View, Text, StyleSheet, TouchableOpacity, Image, ActivityIndicator } from 'react-native';
+import { View, Text, StyleSheet, TouchableOpacity, Image } from 'react-native';
+
+// Importação das imagens
 import logoPrincipal from './img/logoprincipal.png';
 import fotoElevadores from './img/foto3elevadores.png';
 
-const SESSION_STORAGE_KEY = '@fiapElevador:session';
-
 export default function Home() {
+  // Pegamos apenas o que é necessário do contexto
+  // O loading e o redirecionamento são tratados no app/_layout.jsx
   const { isDark, toggleTheme, logout } = useAuth(); 
-  const router = useRouter();
-  const [loading, setLoading] = useState(true);
-
-  useEffect(() => {
-    async function verifySession() {
-      const session = await AsyncStorage.getItem(SESSION_STORAGE_KEY);
-      if (!session) {
-        router.replace('/login'); // Mudei para login para seguir o fluxo padrão
-        return;
-      }
-      setLoading(false);
-    }
-    verifySession();
-  }, [router]);
-
-  if (loading) {
-    return (
-      <View style={[styles.loadingContainer, { backgroundColor: isDark ? '#121212' : '#000' }]}>
-        <ActivityIndicator size="large" color="#ED145B" />
-        <Text style={styles.loadingText}>Verificando autenticação...</Text>
-      </View>
-    );
-  }
 
   return (
     <View style={[styles.container, { backgroundColor: isDark ? '#121212' : '#000' }]}>
       <Stack.Screen options={{ headerShown: false }} />
 
-      {/* Botão de Troca de Tema (Diferencial Dark Mode) */}
+      {/* Botão de Troca de Tema */}
       <TouchableOpacity onPress={toggleTheme} style={styles.botaoTema}>
         <Text style={{ color: '#fff', fontWeight: 'bold' }}>
           {isDark ? '☀️ Mudar para Light' : '🌙 Mudar para Dark'}
@@ -63,6 +40,8 @@ export default function Home() {
       </View>
 
       <View style={styles.menu}>
+        {/* Correção do erro de Style Array: 
+            Passamos apenas UM objeto de estilo para o filho do Link */}
         <Link href="/agendar" asChild>
           <TouchableOpacity style={styles.botao}>
             <Text style={styles.textoBotao}>Agendar Elevador</Text>
@@ -70,13 +49,12 @@ export default function Home() {
         </Link>
 
         <Link href="/localizar" asChild>
-          <TouchableOpacity style={[styles.botao, styles.botaoRosa]}>
+          <TouchableOpacity style={styles.botaoEspecial}>
             <Text style={styles.textoBotao}>Localizar Elevador</Text>
           </TouchableOpacity>
         </Link>
 
-        {/* Logout usando a função do Contexto (Item 3) */}
-        <TouchableOpacity style={[styles.botao, styles.botaoLogout]} onPress={logout}>
+        <TouchableOpacity style={styles.botaoLogout} onPress={logout}>
           <Text style={styles.textoBotao}>Sair do App</Text>
         </TouchableOpacity>
       </View>
@@ -99,7 +77,6 @@ const styles = StyleSheet.create({
     zIndex: 10,
   },
   header: { 
-    backgroundColor: 'transparent', 
     paddingTop: 20,
     paddingBottom: 20, 
     alignItems: 'center',
@@ -132,16 +109,6 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     zIndex: 2 
   },
-  loadingContainer: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
-  loadingText: {
-    marginTop: 12,
-    color: '#fff',
-    fontSize: 16,
-  },
   botao: { 
     backgroundColor: '#1C1C1C', 
     padding: 20, 
@@ -150,11 +117,18 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     borderColor: '#333'
   },
-  botaoRosa: { 
-    backgroundColor: '#ED145B' 
+  // Criamos estilos fixos em vez de passar arrays [style1, style2] para o Link
+  botaoEspecial: { 
+    backgroundColor: '#ED145B',
+    padding: 20, 
+    borderRadius: 12, 
+    alignItems: 'center',
   },
   botaoLogout: {
     backgroundColor: '#444',
+    padding: 20, 
+    borderRadius: 12, 
+    alignItems: 'center',
   },
   textoBotao: { 
     color: '#fff', 

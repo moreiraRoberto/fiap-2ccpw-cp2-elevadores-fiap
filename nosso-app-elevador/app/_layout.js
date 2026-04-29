@@ -1,4 +1,3 @@
-// app/_layout.jsx
 import { Stack } from 'expo-router';
 import { AuthProvider, useAuth } from '../context/AuthContext';
 import { useEffect } from 'react';
@@ -13,20 +12,21 @@ function RootLayoutNav() {
   useEffect(() => {
     if (loading) return;
 
-    const inAuthGroup = segments[0] === '(auth)' || segments[segments.length -1] === 'login' || segments[segments.length -1] === 'register';
+    // Como login e register estão na raiz, verificamos se o segmento atual é um deles
+    const isAuthPage = segments.includes('login') || segments.includes('register');
 
-    if (!signed && !inAuthGroup) {
-      // Redireciona para login se não estiver logado e tentar acessar área restrita
+    if (!signed && !isAuthPage) {
+      // Se não está logado e NÃO está na página de login/registro, força ir para login
       router.replace('/login');
-    } else if (signed && inAuthGroup) {
-      // Redireciona para home se já estiver logado e tentar acessar login/cadastro
+    } else if (signed && isAuthPage) {
+      // Se já está logado e tenta entrar no login/registro, manda para a home
       router.replace('/');
     }
   }, [signed, loading, segments]);
 
   if (loading) {
     return (
-      <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
+      <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center', backgroundColor: '#000' }}>
         <ActivityIndicator size="large" color="#ED145B" />
       </View>
     );
@@ -39,7 +39,14 @@ function RootLayoutNav() {
         headerTintColor: '#fff',
         headerTitleStyle: { fontWeight: 'bold' },
       }}
-    />
+    >
+      {/* Definimos as telas explicitamente para evitar erros de renderização */}
+      <Stack.Screen name="index" options={{ title: 'Home', headerShown: false }} />
+      <Stack.Screen name="login" options={{ title: 'Login', headerShown: false }} />
+      <Stack.Screen name="register" options={{ title: 'Cadastro', headerShown: true }} />
+      <Stack.Screen name="agendar" options={{ title: 'Agendar' }} />
+      <Stack.Screen name="localizar" options={{ title: 'Localizar' }} />
+    </Stack>
   );
 }
 
