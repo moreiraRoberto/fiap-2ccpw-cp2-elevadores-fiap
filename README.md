@@ -106,6 +106,7 @@ nosso-app-elevador/
 2. **Instale as dependências**
    ```bash
    npm install
+   npx expo install expo-notifications
    ```
 
 3. **Execute a aplicação**
