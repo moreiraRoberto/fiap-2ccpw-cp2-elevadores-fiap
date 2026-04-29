@@ -64,7 +64,10 @@ nosso-app-elevador/
 │   ├── _layout.js          # Layout principal com navegação
 │   ├── index.js            # Tela inicial (Home)
 │   ├── agendar.js          # Tela de agendamento
-│   └── localizar.js        # Simulação de elevadores
+│   |── localizar.js        # Simulação de elevadores
+│   ├── login.js            # tela de login 
+│   └── register.js         # tela de cadastro
+
 ├── components/
 │   └── CardElevador.js     # Componente de cartão do elevador
 ├── assets/                 # Recursos estáticos
@@ -100,8 +103,8 @@ nosso-app-elevador/
 
 1. **Clone o repositório**
    ```bash
-   git clone https://github.com/Gui-Ferraz-Medeiros/copia-fiap-2ccpw-cp1-elevadores-fiap.git
-   cd copia-fiap-2ccpw-cp1-elevadores-fiap/nosso-app-elevador
+   git clone  https://github.com/moreiraRoberto/fiap-2ccpw-cp2-elevadores-fiap.git
+   cd seucaminho\fiap-2ccpw-cp2-elevadores-fiap\nosso-app-elevador
    ```
 
 2. **Instale as dependências**
@@ -201,9 +204,37 @@ const menorDistancia = Math.min(...distancias.map(d => d.distancia));
 const melhores = distancias.filter(d => d.distancia === menorDistancia);
 const escolhido = melhores[Math.floor(Math.random() * melhores.length)];
 ```
+```Persistência de Dados (AsyncStorage)
+Utilizamos o armazenamento local para três finalidades críticas:
 
-## 📋e) Próximos Passos
-- Implementar o cancelamento de agendamento
-- Fazer uma integração API dos elevadores.
+Sessão (@fiapElevador:session): Armazena o e-mail do usuário logado para evitar novo login ao reabrir o app.
+Usuário (@fiapElevador:user): Armazena as credenciais de cadastro para validação no login.
+Agendamentos (@fiapElevador:agendamentos): Persiste o último agendamento feito, permitindo que o usuário consulte sua reserva mesmo após fechar o app.
+```
+
+```Navegação Protegida
+Implementada no_layout.js utilizando os hooks useSegments e useRouter. O sistema verifica a existência da chave de sessão antes de permitir que o usuário acesse a index (Home). Caso contrário, redireciona automaticamente para /login.
+
+```
+``` Dark Mode
+Provider Global: Envolvemos o _layout.js com um ThemeProvider.
+Hooks Customizados: Uso do hook useContext(ThemeContext) em cada tela para acessar as cores atuais.
+Alternância em Tempo Real: Implementamos um "Switch" na página principal (index.js) que alterna as variáveis de cor de fundo e texto de toda a aplicação.
+Estilos Condicionais: Substituição de cores fixas (ex: #fff) por variáveis dinâmicas que mudam conforme o estado do contexto.
+
+```
+
+##e) Diferencial Implementado (OBRIGATÓRIO)
+```Diferencial Escolhido: Suporte a Modo Escuro (Dark Mode) com Tema Dinâmico via Context API.
+
+ A escolha deste diferencial foca na acessibilidade e conforto visual. O Modo Escuro reduz o cansaço ocular em ambientes de baixa luminosidade e economiza bateria em telas OLED. permitindo que uma alteração na tela de configurações (ou na Home) reflita instantaneamente em todos os componentes e telas do projeto sem a necessidade de passar "props" manualmente.
+
+```
+
+
+## 📋f) Próximos Passos
+- Geofencing: Ativar o painel de chamadas apenas quando o usuário estiver a menos de 50 metros do prédio da FIAP.
+- Integração com API Real: Substituir a simulação por dados reais de sensores de IoT instalados nos elevadores.
+
 
 
