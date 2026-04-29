@@ -145,10 +145,15 @@ nosso-app-elevador/
 ## 📋d) Demonstração
 
 ### TELAS DO APLICATIVO
+**Cadastrar**
+<img width="597" height="845" alt="Image" src="https://github.com/user-attachments/assets/9846f23d-1b4d-4d6b-99de-f706512b4189" />3
+
+**Login**
+<img width="597" height="888" alt="Image" src="https://github.com/user-attachments/assets/1c1f056d-f32c-4fd5-85a9-9ac1c38bd67e" />
 
 **HOME**
 
-<img width="597" height="845" alt="image" src="https://github.com/user-attachments/assets/4aa68605-872d-4520-ae9b-33c096810deb" />
+<img width="597" height="845" alt="image" src="https://github.com/user-attachments/assets/00655f2b-bdb1-479b-a9e7-d8aea5bf9c85" />" 
 
 **AGENDAR ELEVADOR**
 
@@ -161,6 +166,7 @@ nosso-app-elevador/
 ### VÍDEO DE DEMONSTRAÇÃO
 
 ![Demonstração do App](./nosso-app-elevador/app/img/demonstracaogif.gif)
+![demostração do App](./nosso-app-elevador/app/img/gif2.gif)
 
 ## 📋d) Decisões Técnicas
 **HOOKs**
@@ -204,32 +210,31 @@ const menorDistancia = Math.min(...distancias.map(d => d.distancia));
 const melhores = distancias.filter(d => d.distancia === menorDistancia);
 const escolhido = melhores[Math.floor(Math.random() * melhores.length)];
 ```
-```Persistência de Dados (AsyncStorage)
+Persistência de Dados (AsyncStorage)
 Utilizamos o armazenamento local para três finalidades críticas:
 
 Sessão (@fiapElevador:session): Armazena o e-mail do usuário logado para evitar novo login ao reabrir o app.
 Usuário (@fiapElevador:user): Armazena as credenciais de cadastro para validação no login.
 Agendamentos (@fiapElevador:agendamentos): Persiste o último agendamento feito, permitindo que o usuário consulte sua reserva mesmo após fechar o app.
-```
 
-```Navegação Protegida
+
+Navegação Protegida
 Implementada no_layout.js utilizando os hooks useSegments e useRouter. O sistema verifica a existência da chave de sessão antes de permitir que o usuário acesse a index (Home). Caso contrário, redireciona automaticamente para /login.
 
-```
-``` Dark Mode
+ Dark Mode
 Provider Global: Envolvemos o _layout.js com um ThemeProvider.
 Hooks Customizados: Uso do hook useContext(ThemeContext) em cada tela para acessar as cores atuais.
 Alternância em Tempo Real: Implementamos um "Switch" na página principal (index.js) que alterna as variáveis de cor de fundo e texto de toda a aplicação.
 Estilos Condicionais: Substituição de cores fixas (ex: #fff) por variáveis dinâmicas que mudam conforme o estado do contexto.
 
-```
+
 
 ##e) Diferencial Implementado (OBRIGATÓRIO)
-```Diferencial Escolhido: Suporte a Modo Escuro (Dark Mode) com Tema Dinâmico via Context API.
+`Diferencial Escolhido: Suporte a Modo Escuro (Dark Mode) com Tema Dinâmico via Context API.
 
  A escolha deste diferencial foca na acessibilidade e conforto visual. O Modo Escuro reduz o cansaço ocular em ambientes de baixa luminosidade e economiza bateria em telas OLED. permitindo que uma alteração na tela de configurações (ou na Home) reflita instantaneamente em todos os componentes e telas do projeto sem a necessidade de passar "props" manualmente.
 
-```
+
 
 
 ## 📋f) Próximos Passos
