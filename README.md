@@ -157,17 +157,17 @@ nosso-app-elevador/
 
 **AGENDAR ELEVADOR**
 
-<img width="616" height="722" alt="image" src="https://github.com/user-attachments/assets/fdfc0b45-17e2-46ec-bb5d-efd9feca7445" />
+<img width="597" height="722" alt="image" src="https://github.com/user-attachments/assets/fdfc0b45-17e2-46ec-bb5d-efd9feca7445" />
 
 **LOCALIZAR ELEVADOR**
 
-<img width="601" height="872" alt="image" src="https://github.com/user-attachments/assets/36d165b3-3a0f-4c82-a70b-7a7a437f3973" />
+<img width="597" height="872" alt="image" src="https://github.com/user-attachments/assets/36d165b3-3a0f-4c82-a70b-7a7a437f3973" />
 
 ### VÍDEO DE DEMONSTRAÇÃO
 
 
 ![Demonstração do App](./nosso-app-elevador/app/img/GIF1.gif)
-<img width="652" height="828" alt="Image" src="https://github.com/user-attachments/assets/0d98ec44-9c34-4b74-8816-3fbeb820fa4f" />
+<img width="597" height="872" alt="Image" src="https://github.com/user-attachments/assets/0d98ec44-9c34-4b74-8816-3fbeb820fa4f" />
 
 ## 📋d) Decisões Técnicas
 **HOOKs**
