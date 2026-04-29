@@ -165,8 +165,9 @@ nosso-app-elevador/
 
 ### VÍDEO DE DEMONSTRAÇÃO
 
+
+![Demonstração do App](./nosso-app-elevador/app/img/GIF1.gif)
 ![Demonstração do App](./nosso-app-elevador/app/img/demonstracaogif.gif)
-![demostração do App](./nosso-app-elevador/app/img/gif2.gif)
 
 ## 📋d) Decisões Técnicas
 **HOOKs**
